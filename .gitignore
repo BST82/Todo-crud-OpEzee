@@ -24,3 +24,6 @@ out-tsc/
 
 # Optional: VS Code settings
 .vscode/
+node_modules/
+.env
+.DS_Store

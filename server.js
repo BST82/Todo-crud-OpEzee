@@ -5,15 +5,30 @@ const cors = require('cors');
 // Load environment variables FIRST
 dotenv.config();
 
-// Now import other modules that depend on env vars
+console.log('Before dotenv config:', process.env.MONGO_URI); // Should be undefined
+
+// Load environment variables FIRST
+dotenv.config();
+
+console.log('After dotenv config:', process.env.MONGO_URI); // Should show your URI
+console.log('All env vars:', Object.keys(process.env)); // List all loaded variables
+
+// Critical check
+if (!process.env.MONGO_URI) {
+  console.error('FATAL ERROR: MONGO_URI is not defined!');
+  process.exit(1);
+}
+
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/user.routes');
 
-connectDB();  // Now MONGO_URI will be defined
+connectDB();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+
 
 // Routes
 app.use('/api/todos', require('./routes/todo.routes'));
