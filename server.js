@@ -3,20 +3,10 @@ const cors = require('cors');
 // Always load dotenv (Railway doesn't set NODE_ENV=production)
 require('dotenv').config();
 
-console.log('MONGO_URI:', process.env.MONGO_URI); // Should show now
+console.log('Environment:', process.env.NODE_ENV);
+console.log('MONGO_URI:', process.env.MONGO_URI ? '***' : 'UNDEFINED!');
 
-// Rest of your code remains the same
 const connectDB = require('./config/db');
-
-console.log('MONGO_URI:', process.env.MONGO_URI); // Debug log
-
-// Critical check
-if (!process.env.MONGO_URI) {
-  console.error('FATAL ERROR: MONGO_URI is not defined!');
-  console.log('All environment variables:', Object.keys(process.env));
-  process.exit(1);
-}
-
 const userRoutes = require('./routes/user.routes');
 
 connectDB();
