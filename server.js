@@ -1,13 +1,19 @@
 const express = require('express');
 const cors = require('cors');
-// Always load dotenv (Railway doesn't set NODE_ENV=production)
-require('dotenv').config();
 
-console.log('Environment:', process.env.NODE_ENV);
-console.log('MONGO_URI:', process.env.MONGO_URI ? '***' : 'UNDEFINED!');
+// Remove dotenv loading completely
+// Only use in development (via .env file)
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+  console.log('Development: Loading .env file');
+}
+
+console.log('MONGO_URI present?', !!process.env.MONGO_URI); // Check existence
 
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/user.routes');
+
+// Rest of your code
 
 connectDB();
 
